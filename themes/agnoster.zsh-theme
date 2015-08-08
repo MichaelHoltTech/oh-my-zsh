@@ -169,7 +169,10 @@ prompt_status() {
 
   [[ -n "$symbols" ]] && prompt_segment black default "$symbols"
 }
-
+function _gitprompt {
+    [ "$(git config prompt.hide)" = "true" ] && return
+    echo "$(prompt_git)" # or whatever you use to display the git prompt
+}
 ## Main prompt
 build_prompt() {
   RETVAL=$?
@@ -177,7 +180,7 @@ build_prompt() {
   prompt_virtualenv
   prompt_context
   prompt_dir
-  prompt_git
+  _gitprompt
   prompt_hg
   prompt_end
 }
